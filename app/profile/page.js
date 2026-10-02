@@ -17,8 +17,6 @@ const social = [
 export default function Profile() {
   return (
     <section className="relative">
-      <div className="bg-grid bg-radial-fade absolute inset-0 -z-10" />
-
       <div className="mx-auto max-w-3xl px-6 py-20">
         <Card className="border border-white/10 bg-foreground/3">
           <CardContent className="flex flex-col items-center text-center">

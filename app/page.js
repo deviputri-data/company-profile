@@ -35,21 +35,10 @@ export default function Home() {
  return (
  <>
  <section className="relative overflow-hidden">
- <div className="absolute inset-0 bg-grid bg-radial-fade" />
-
- {/* Blob warna-warni */}
- <div className="absolute top-1/2 left-1/2 -z-10 h-420px w-420px -translate-x-1/2 -translate-y-1/2 rounded-full bg-primary/30 blur-[120px]" />
- <div className="animate-blob absolute top-16 left-10 -z-10 h-72 w-72 rounded-full bg-accent/40 blur-[90px]" />
- <div className="animate-blob absolute top-40 right-10 -z-10 h-72 w-72 rounded-full bg-[#FFDE59]/40 blur-[90px] [animation-delay:4s]" />
- <div className="animate-blob absolute bottom-10 left-1/3 -z-10 h-64 w-64 rounded-full bg-[#7B5CFF]/35 blur-[90px] [animation-delay:2s]" />
- <div className="animate-blob absolute bottom-20 right-1/4 -z-10 h-56 w-56 rounded-full bg-secondary/50 blur-[90px] [animation-delay:6s]" />
+ 
 
  <div className="mx-auto max-w-6xl px-6 py-28 md:py-36 relative">
- {/* Sparkle dekoratif */}
- <Sparkles className="absolute top-10 right-16 size-6 text-[#FFDE59] animate-pulse" />
- <Sparkles className="absolute bottom-20 left-12 size-5 text-accent animate-pulse [animation-delay:1s]" />
- <Sparkles className="absolute top-1/3 left-8 size-4 text-primary animate-pulse [animation-delay:2s]" />
- <Sparkles className="hidden md:block absolute top-10 right-16 size-6 text-[#FFDE59] animate-pulse" />
+ 
 
  <div className="animate-fade-up mx-auto max-w-3xl text-center">
  <div className="mx-auto mb-6 inline-flex items-center gap-2 rounded-full border border-border bg-accent/10 px-4 py-1.5 text-sm text-primary">

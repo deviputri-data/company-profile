@@ -1,27 +1,61 @@
 "use client";
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
-export const FavoriteContext = createContext();
+export const FavoriteContext = createContext(undefined);
 
 export function FavoriteProvider({ children }) {
-    const [favorites, setFavorites] = useState([]);
+  const [favorites, setFavorites] = useState([]);
 
-    const toggleFavorite = (user) => {
-        setFavorites((prev) => {
-            const isAlready = prev.some((u) => u.id === user.id);
-            if (isAlready) {
-                return prev.filter((u) => u.id !== user.id);
-            } else {
-                return [...prev, user]};
-        });
-    };
+  useEffect(() => {
+    fetch("/api/favorites")
+      .then((res) => res.json())
+      .then(setFavorites);
+  }, []);
 
-    const isFavorite = (userId) => favorites.some((u) => u.id === userId);
+  async function addFavorite(user) {
+    const res = await fetch("/api/favorites", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(user),
+    });
 
-    return (
-        <FavoriteContext.Provider value={{ favorites, toggleFavorite, isFavorite }}>
-            {children}
-        </FavoriteContext.Provider>
-    );
-};
+    if (res.ok) {
+      const saved = await res.json();
+      setFavorites((prev) => [...prev, saved]);
+    }
+  }
+
+  async function removeFavorite(userId) {
+    const res = await fetch(`/api/favorites/${userId}`, { method: "DELETE" });
+
+    if (res.ok) {
+      setFavorites((prev) => prev.filter((f) => f.id !== userId));
+    }
+  }
+
+  function isFavorite(userId) {
+    return favorites.some((f) => f.id === userId);
+  }
+
+  const value = {
+    favorites,
+    addFavorite,
+    removeFavorite,
+    isFavorite,
+  };
+
+  return (
+    <FavoriteContext.Provider value={value}>
+      {children}
+    </FavoriteContext.Provider>
+  );
+}
+
+export function useFavorite() {
+  const context = useContext(FavoriteContext);
+  if (context === undefined) {
+    throw new Error("useFavorite harus dipakai di dalam <FavoriteProvider>");
+  }
+  return context;
+}

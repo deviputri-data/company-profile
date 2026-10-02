@@ -16,8 +16,6 @@ const stats = [
 export default function AboutPage() {
   return (
     <section className="relative">
-      <div className="bg-grid bg-radial-fade absolute inset-0 -z-10" />
-
       <div className="mx-auto grid max-w-6xl gap-16 px-6 py-20 md:grid-cols-2 md:items-center">
         <div>
           <p className="text-sm font-semibold text-primary">About Us</p>
