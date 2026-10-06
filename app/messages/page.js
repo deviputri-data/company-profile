@@ -1,8 +1,24 @@
-import { messages } from "@/lib/db";
-
+import { connection } from "next/server";
+import { supabase } from "@/lib/supabase";
 import { deleteMessageAction } from "./actions";
 
-export default function MessagesPage() {
+export default async function MessagesPage() {
+  await connection();
+
+const { data: messages, error } = await supabase
+  .from("messages")
+  .select("*")
+  .order("created_at", { ascending: false });
+
+if (error) {
+  return (
+    <section className="mx-auto max-w-3xl px-6 py-20">
+      <h1 className="text-3xl font-bold">Pesan Masuk</h1>
+      <p className="mt-8 text-red-600">Gagal memuat pesan: {error.message}</p>
+    </section>
+  );
+}
+
   return (
     <section className="mx-auto max-w-3xl px-6 py-20">
       <h1 className="text-3xl font-bold">Pesan Masuk</h1>
