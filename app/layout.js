@@ -5,8 +5,9 @@ import { Sparkles } from "lucide-react";
 
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
-import { UserProvider } from "@/context/UserContext";
+import { AuthProvider } from "@/context/AuthContext";
 import { FavoriteProvider } from "@/context/FavoriteContext";
+import { createClient } from "@/lib/supabase/server";
 
 const fontSans = localFont({
   src: [
@@ -29,7 +30,12 @@ export const metadata = {
     "We help individuals and businesses build modern, simple, and useful digital experiences.",
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  const supabase = await createClient();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
   return (
     <html
       lang="en"
@@ -54,7 +60,7 @@ export default function RootLayout({ children }) {
           <Sparkles className="absolute top-1/3 left-8 size-4 animate-pulse text-primary [animation-delay:2s]" />
         </div>
         
-        <UserProvider>
+        <AuthProvider user={user ? { id: user.id, email: user.email } : null}>
           <FavoriteProvider>
             <Navbar />
 
@@ -64,7 +70,7 @@ export default function RootLayout({ children }) {
 
             <Footer />
           </FavoriteProvider>
-        </UserProvider>
+        </AuthProvider>
       </body>
     </html>
   );
